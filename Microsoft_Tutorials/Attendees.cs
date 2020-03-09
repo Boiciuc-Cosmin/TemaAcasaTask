@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Task
 {
-    public class Attendees : IAddFromFile 
+    public class Attendees : IFileWork 
     {
         public List<Person> People = new List<Person>();
         Random Random = new Random();

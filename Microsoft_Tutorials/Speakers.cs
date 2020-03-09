@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Task
 {
-    public class Speakers : IAddFromFile
+    public class Speakers : IFileWork
     {
         
         List<Person> SpeakersList = new List<Person>();  
@@ -53,8 +53,7 @@ namespace Task
             }
             catch (Exception)
             {
-
-                throw;
+                throw new FileNotFoundException();
             }
         }
     }

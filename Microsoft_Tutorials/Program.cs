@@ -20,7 +20,7 @@ namespace Task
 
             var speakers = new Speakers();
             var attendees = new Attendees();
-           // attendees.AddFromFile("fisier.csv");         
+           attendees.AddFromFile("fisier.csv");         
         
             speakers.AddFromFile("fisier.csv");
             speakers.DisplaySpeakers();

@@ -1,6 +1,6 @@
 ﻿namespace Task
 {
-    public interface IAddFromFile
+    public interface IFileWork
     {
       public void AddFromFile(string filePath);
     }
