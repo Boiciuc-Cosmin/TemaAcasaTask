@@ -16,17 +16,12 @@ namespace Task
                 new Person {FirstName = "Ion", LastName = "Gheorghe", Id = "026", HasPayed = true}, 
                 new Person {FirstName = "Vasile", LastName = "Blaj", Id = "027", HasPayed = true}
             };
-            List<Person> speakersList = new List<Person>()
-            {
-                new Person {FirstName = "Nume", LastName = "alt nume", Id="123" }
-            };
+          
 
             var speakers = new Speakers();
             var attendees = new Attendees();
-            attendees.AddFromFile("fisier.csv");
-            speakers.AddSpeaker(persons.Find(x => x.Id == "#026"));
-            speakers.AddSpeakers(speakersList);
-
+           // attendees.AddFromFile("fisier.csv");         
+        
             speakers.AddFromFile("fisier.csv");
             speakers.DisplaySpeakers();
            

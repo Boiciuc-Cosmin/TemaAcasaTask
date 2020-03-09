@@ -16,11 +16,7 @@ namespace Task
                 SpeakersList.Add(speaker);
             }
         }
-        public void AddSpeaker(Person person)
-        {
-            SpeakersList.Add(person);
-           
-        }
+        
         public void DisplaySpeakers()
         {
             foreach (var speaker in SpeakersList)
