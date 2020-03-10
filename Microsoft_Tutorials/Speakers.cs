@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -7,8 +7,9 @@ namespace Task
 {
     public class Speakers : IFileWork
     {
-        
-        List<Person> SpeakersList = new List<Person>();  
+        private List<Person> SpeakersList = new List<Person>();
+        public int CountSpeakers { get { return SpeakersList.Count; } }
+
         public void AddSpeakers(List<Person> people)
         {
             foreach (var speaker in people)
@@ -16,16 +17,18 @@ namespace Task
                 SpeakersList.Add(speaker);
             }
         }
-        
+
         public void DisplaySpeakers()
         {
+            Console.WriteLine("\tSpeakers");
+            Console.WriteLine("   ID \t\tName");
             foreach (var speaker in SpeakersList)
             {
                 Console.WriteLine($"   #{speaker.Id} \t{speaker.FirstName} {speaker.LastName.ToUpper()}");
-            }          
+            }
         }
 
-        public void AddFromFile(string filePath)
+        public void ReadFromFile(string filePath)
         {
             try
             {
@@ -38,22 +41,31 @@ namespace Task
                     newPerson.Id = fields[0];
                     newPerson.FirstName = fields[1];
                     newPerson.LastName = fields[2];
-                    if (fields[3] == "true")
-                    {
-                        newPerson.HasPayed = true;
-                    }
-                    else if(fields[3] == "false")
-                    {
-                        newPerson.HasPayed = false;
-                    }
                     SpeakersList.Add(newPerson);
-                    
-                }          
-               
+                }
             }
             catch (Exception)
             {
                 throw new FileNotFoundException();
+            }
+        }
+
+        public void WriteToFile(string filePath)
+        {
+            List<string> output = new List<string>();
+            foreach (var person in SpeakersList)
+            {
+                output.Add($"{person.Id},{person.FirstName},{person.LastName}");
+            }
+            Console.WriteLine("Writing data to file...");
+            try
+            {
+                File.WriteAllLines(@filePath, output);
+                Console.WriteLine("All entries written succesfully");
+            }
+            catch (Exception)
+            {
+                throw new InvalidDataException();
             }
         }
     }

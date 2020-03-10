@@ -1,40 +1,40 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Task
 {
-    public class Attendees : IFileWork 
+    public class Attendees : IFileWork
     {
         public List<Person> People = new List<Person>();
-        Random Random = new Random();
-      
-       
+        public List<Person> PeopleWhoPaid = new List<Person>();
+        private Random Random = new Random();
+        public int CountAttendees { get { return People.Count; } }
+        public int CountPeopleWhoPaid;
+
         public void AddPeople(List<Person> people)
         {
             foreach (var person in people)
             {
                 People.Add(person);
                 int random = Random.Next(1000, 10000);
-                if (random != person.PayedNumber && person.HasPayed)
+                if (random != person.PayedNumber && person.HasPaid)
                 {
                     person.PayedNumber = random;
                 }
             }
         }
-      
+
         public void DisplayAllPeople()
-        {            
-            Console.WriteLine();
-            Console.WriteLine($"   ID    PayID \tName");            
+        {
+            Console.WriteLine("\tAttendees");
+            Console.WriteLine($"   ID    PayID \tName");
             foreach (var person in People)
             {
-                Console.WriteLine($"   #{person.Id}  {person.PayedNumber}  \t{person.FirstName} {person.LastName.ToUpper()} {person.HasPayed}");
-            }        
-        }    
+                Console.WriteLine($"   #{person.Id}  {person.PayedNumber}  \t{person.FirstName} {person.LastName.ToUpper()} {person.HasPaid}");
+            }
+        }
 
         public void SelectPersonById(string id)
         {
@@ -48,22 +48,22 @@ namespace Task
             }
         }
 
-        public void SelectHasPayedPeople()
+        public void SelectHasPaidPeople()
         {
             Console.WriteLine();
             var hasPayed = from person in People
-                           where person.HasPayed == true
+                           where person.HasPaid == true
                            orderby person.Id ascending
-                           select person;
-            Console.WriteLine("Poeple who payed the entrance: ");
-            Console.WriteLine($"   ID    PayID \tName");
+                           select person;         
 
             foreach (var people in hasPayed)
             {
-                Console.WriteLine($"   #{people.Id}  {people.PayedNumber}  \t{people.FirstName} {people.LastName.ToUpper()}");
+                PeopleWhoPaid.Add(people);
+                CountPeopleWhoPaid++;
             }
         }
-        public void AddFromFile(string filePath)
+
+        public void ReadFromFile(string filePath)
         {
             try
             {
@@ -79,17 +79,15 @@ namespace Task
                     int payed = int.Parse(fields[4]);
                     if (fields[3] == "TRUE")
                     {
-                        newPerson.HasPayed = true;
+                        newPerson.HasPaid = true;
                         newPerson.PayedNumber = payed;
                     }
                     else if (fields[3] == "FALSE")
                     {
-                        newPerson.HasPayed = false;                        
-                    }                      
+                        newPerson.HasPaid = false;
+                    }
                     People.Add(newPerson);
-
                 }
-
             }
             catch (Exception)
             {
@@ -97,6 +95,23 @@ namespace Task
             }
         }
 
-       
+        public void WriteToFile(string filePath)
+        {
+            List<string> output = new List<string>();
+            foreach (var person in People)
+            {
+                output.Add($"{person.Id},{person.FirstName},{person.LastName},{person.HasPaid},{person.PayedNumber}");
+            }
+            Console.WriteLine("Writing data to file...");
+            try
+            {
+                File.WriteAllLines(@filePath, output);
+                Console.WriteLine("All entries written");
+            }
+            catch (Exception)
+            {
+                throw new InvalidCastException();
+            }
+        }
     }
 }
