@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace Task
 {
-    public class Speakers : IFileWork
+    public class Speakers : IFileWork, IDisplayMethod
     {
-        private List<Person> SpeakersList = new List<Person>();
-        public int CountSpeakers { get { return SpeakersList.Count; } }
+        public List<Person> SpeakersList = new List<Person>();
 
         public void AddSpeakers(List<Person> people)
         {
@@ -18,7 +17,7 @@ namespace Task
             }
         }
 
-        public void DisplaySpeakers()
+        public void DisplayAllMembers()
         {
             Console.WriteLine("\tSpeakers");
             Console.WriteLine("   ID \t\tName");
@@ -33,7 +32,6 @@ namespace Task
             try
             {
                 List<string> lines = File.ReadAllLines(@filePath).ToList();
-
                 foreach (var line in lines)
                 {
                     string[] fields = line.Split(',');
@@ -41,6 +39,8 @@ namespace Task
                     newPerson.Id = fields[0];
                     newPerson.FirstName = fields[1];
                     newPerson.LastName = fields[2];
+                    newPerson.HasPaid = true;
+                    newPerson.PayedNumber = 2406;
                     SpeakersList.Add(newPerson);
                 }
             }

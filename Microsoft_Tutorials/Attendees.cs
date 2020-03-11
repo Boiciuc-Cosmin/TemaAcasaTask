@@ -5,13 +5,10 @@ using System.Linq;
 
 namespace Task
 {
-    public class Attendees : IFileWork
+    public class Attendees : IFileWork, IDisplayMethod
     {
         public List<Person> People = new List<Person>();
-        public List<Person> PeopleWhoPaid = new List<Person>();
         private Random Random = new Random();
-        public int CountAttendees { get { return People.Count; } }
-        public int CountPeopleWhoPaid;
 
         public void AddPeople(List<Person> people)
         {
@@ -26,7 +23,7 @@ namespace Task
             }
         }
 
-        public void DisplayAllPeople()
+        public void DisplayAllMembers()
         {
             Console.WriteLine("\tAttendees");
             Console.WriteLine($"   ID    PayID \tName");
@@ -48,21 +45,6 @@ namespace Task
             }
         }
 
-        public void SelectHasPaidPeople()
-        {
-            Console.WriteLine();
-            var hasPayed = from person in People
-                           where person.HasPaid == true
-                           orderby person.Id ascending
-                           select person;         
-
-            foreach (var people in hasPayed)
-            {
-                PeopleWhoPaid.Add(people);
-                CountPeopleWhoPaid++;
-            }
-        }
-
         public void ReadFromFile(string filePath)
         {
             try
@@ -77,12 +59,12 @@ namespace Task
                     newPerson.FirstName = fields[1];
                     newPerson.LastName = fields[2];
                     int payed = int.Parse(fields[4]);
-                    if (fields[3] == "TRUE")
+                    if (fields[3].ToUpper() == "TRUE")
                     {
                         newPerson.HasPaid = true;
                         newPerson.PayedNumber = payed;
                     }
-                    else if (fields[3] == "FALSE")
+                    else if (fields[3].ToUpper() == "FALSE")
                     {
                         newPerson.HasPaid = false;
                     }

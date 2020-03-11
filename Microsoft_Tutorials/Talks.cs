@@ -5,40 +5,107 @@ using System.Linq;
 
 namespace Task
 {
-    public class Talks : IFileWork
+    public class Talks : IFileWork, IDisplayMethod
     {
         public string Subjects { get; set; }
-        public int SeatsAvaillable;
+        public int SeatsAvaillable;       
         public string Datetimes;
-        DateTime dateTime = new DateTime();
+        private DateTime dateTime = new DateTime();
         private List<Talks> Talk = new List<Talks>();
-       
-       
-        
+        private List<List<Person>> People = new List<List<Person>>();
+        private List<Person> Speakers = new List<Person>();
+
         public void AddTalkMeeting(List<Talks> talks)
-        {            
+        {
             foreach (var talk in talks)
             {
                 talk.dateTime = Convert.ToDateTime(talk.Datetimes);
                 Talk.Add(talk);
             }
-        }    
-        public void Add()
-        {
-            Attendees attendees = new Attendees();
-            var filter = from person in attendees.People
-                         select person;
-           
-            
-                           
         }
-        public void DisplayTalk()
+
+        public void AddPeopleToTalk(List<Person> people, string talk, List<Person> speakers, string idSpeaker)
         {
-            foreach (var talk in Talk)
+            foreach (var item in speakers)
             {
-                Console.WriteLine(talk.dateTime + talk.Subjects + talk.SeatsAvaillable);
-         
-            }            
+                if (item.Id == idSpeaker)
+                {
+                    Speakers.Add(item);
+                }
+            }
+            for (int i = 0; i < Talk.Count; i++)
+            {
+                if (Talk[i].Subjects.Contains(talk))
+                {
+                    try
+                    {
+                        People.Add(people);
+                    }
+                    catch
+                    {
+                        Console.WriteLine("eroare");
+                    }
+                }
+            }
+        }
+
+        public void DisplayAllMembers()
+        {
+           
+            for (int i = 0; i < Talk.Count; i++)
+            {
+                int nr = 1;
+                Console.WriteLine();
+                Console.WriteLine($"   {i + 1} Subject: << {Talk[i].Subjects.ToUpper()} >> {Talk[i].dateTime} Seats: {Talk[i].SeatsAvaillable}");
+                try
+                {
+                    Console.WriteLine($" Speaker: {Speakers[i].FirstName} {Speakers[i].LastName} #{Speakers[i].Id}");
+                }
+                catch
+                {
+                    Console.WriteLine("Index out of Range");
+                }
+                Console.WriteLine();
+                Console.WriteLine("   People attending to this talk:");
+                Console.WriteLine($"    ID   PayID \tName");
+                try
+                {
+                    foreach (var person in People[i])
+                    {
+                        if (nr <= Talk[i].SeatsAvaillable)
+                        {
+                            if (person.HasPaid)
+                            {
+                                Console.WriteLine($"{nr}   {person.Id}  {person.PayedNumber}   {person.FirstName} {person.LastName.ToUpper()}");
+                                nr++;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("   No person has register to this talk");
+                }
+            }
+        }
+
+        public void DisplayOneTalk(int nrTalk)
+        {
+            Console.WriteLine($"{Talk[nrTalk].Subjects} {Talk[nrTalk].SeatsAvaillable} {Talk[nrTalk].dateTime}");
+            try
+            {
+                foreach (var person in People[nrTalk])
+                {
+                    if (person.HasPaid)
+                    {
+                        Console.WriteLine($" {person.Id}  {person.PayedNumber}  \t{person.FirstName} {person.LastName.ToUpper()}");
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Not enough members");
+            }
         }
 
         public void ReadFromFile(string filePath)
@@ -52,21 +119,35 @@ namespace Task
                     string[] fields = line.Split(',');
                     Talks talk = new Talks();
                     talk.Subjects = fields[0];
-                    talk.SeatsAvaillable = int.Parse(fields[1]);               
-                    dateTime = Convert.ToDateTime(fields[2]);
+                    talk.SeatsAvaillable = int.Parse(fields[1]);
+                    talk.Datetimes = fields[2];
+                    talk.dateTime = Convert.ToDateTime(talk.Datetimes);
                     Talk.Add(talk);
                 }
             }
             catch (Exception)
             {
-
-                throw;
+                throw new FileNotFoundException();
             }
         }
 
         public void WriteToFile(string filePath)
         {
-            throw new NotImplementedException();
+            List<string> output = new List<string>();
+            foreach (var talk in Talk)
+            {
+                output.Add($"{talk.Subjects},{talk.SeatsAvaillable},{talk.dateTime}");
+            }
+            Console.WriteLine("Writing data to file...");
+            try
+            {
+                File.WriteAllLines(@filePath, output);
+                Console.WriteLine("All entries written");
+            }
+            catch (Exception)
+            {
+                throw new InvalidCastException();
+            }
         }
     }
 }
