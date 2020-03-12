@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Task
+namespace ConferenceLibrary
 {
     public class Talks : IFileWork, IDisplayMethod
     {
@@ -50,8 +50,7 @@ namespace Task
         }
 
         public void DisplayAllMembers()
-        {
-           
+        {           
             for (int i = 0; i < Talk.Count; i++)
             {
                 int nr = 1;
@@ -134,14 +133,23 @@ namespace Task
         public void WriteToFile(string filePath)
         {
             List<string> output = new List<string>();
-            foreach (var talk in Talk)
+            for (int i = 0; i < Talk.Count - 1 ; i++)
             {
-                output.Add($"{talk.Subjects},{talk.SeatsAvaillable},{talk.dateTime}");
+                output.Add($"{Talk[i].Subjects},{Talk[i].SeatsAvaillable},{Talk[i].dateTime}");
+                foreach (var person in People[i])
+                {
+                    output.Add($"{person.Id},{person.FirstName},{person.LastName}");
+                }
             }
+            //foreach (var talk in Talk)
+            //{
+            //    output.Add($"{talk.Subjects},{talk.SeatsAvaillable},{talk.dateTime}");               
+            //}
             Console.WriteLine("Writing data to file...");
             try
             {
                 File.WriteAllLines(@filePath, output);
+                
                 Console.WriteLine("All entries written");
             }
             catch (Exception)

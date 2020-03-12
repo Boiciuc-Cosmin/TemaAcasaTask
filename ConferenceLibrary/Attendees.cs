@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Task
+namespace ConferenceLibrary
 {
     public class Attendees : IFileWork, IDisplayMethod
     {

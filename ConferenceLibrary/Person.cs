@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task
+namespace ConferenceLibrary
 {
     public class Person
     {

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NBitcoin" Version="5.0.18" />
+    <ProjectReference Include="..\ConferenceLibrary\ConferenceLibrary.csproj" />
   </ItemGroup>
 
 </Project>
