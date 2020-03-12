@@ -57,7 +57,7 @@ namespace ConferenceLibrary
                 Console.WriteLine($"   {i + 1} Subject: << {Workshops[i].WorkShopTitle.ToUpper()} >> {Workshops[i].DateTime} Seats: {Workshops[i].SeatsAvaillable}");
                 try
                 {
-                    Console.WriteLine($" Speaker: {Organzier[i].FirstName} {Organzier[i].LastName} #{Organzier[i].Id}");
+                    Console.WriteLine($" Speaker: {Organzier[i].FullName} #{Organzier[i].Id}");
                 }
                 catch
                 {
@@ -74,7 +74,7 @@ namespace ConferenceLibrary
                         {
                             if (person.HasPaid)
                             {
-                                Console.WriteLine($"{nr}   {person.Id}  {person.PayedNumber}   {person.FirstName} {person.LastName.ToUpper()}");
+                                Console.WriteLine($"{nr}   {person.Id}  {person.PayedNumber}   {person.FullName}");
                                 nr++;
                             }
                         }
@@ -113,9 +113,13 @@ namespace ConferenceLibrary
         public void WriteToFile(string filePath)
         {
             List<string> output = new List<string>();
-            foreach (var worksjop in Workshops)
+            for (int i = 0; i < Workshops.Count - 1; i++)
             {
-                output.Add($"{worksjop.WorkShopTitle},{worksjop.SeatsAvaillable},{worksjop.DateTime}");
+                output.Add($"{Workshops[i].WorkShopTitle},{Workshops[i].SeatsAvaillable},{Workshops[i].DateTime}");
+                foreach (var person in PeopleInWorkshop[i])
+                {
+                    output.Add($"{person.Id},{person.FullName}");
+                }
             }
             try
             {

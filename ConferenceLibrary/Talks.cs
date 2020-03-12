@@ -8,7 +8,7 @@ namespace ConferenceLibrary
     public class Talks : IFileWork, IDisplayMethod
     {
         public string Subjects { get; set; }
-        public int SeatsAvaillable;       
+        public int SeatsAvaillable;
         public string Datetimes;
         private DateTime dateTime = new DateTime();
         private List<Talks> Talk = new List<Talks>();
@@ -50,7 +50,7 @@ namespace ConferenceLibrary
         }
 
         public void DisplayAllMembers()
-        {           
+        {
             for (int i = 0; i < Talk.Count; i++)
             {
                 int nr = 1;
@@ -58,7 +58,7 @@ namespace ConferenceLibrary
                 Console.WriteLine($"   {i + 1} Subject: << {Talk[i].Subjects.ToUpper()} >> {Talk[i].dateTime} Seats: {Talk[i].SeatsAvaillable}");
                 try
                 {
-                    Console.WriteLine($" Speaker: {Speakers[i].FirstName} {Speakers[i].LastName} #{Speakers[i].Id}");
+                    Console.WriteLine($" Speaker: {Speakers[i].FullName} #{Speakers[i].Id}");
                 }
                 catch
                 {
@@ -75,7 +75,7 @@ namespace ConferenceLibrary
                         {
                             if (person.HasPaid)
                             {
-                                Console.WriteLine($"{nr}   {person.Id}  {person.PayedNumber}   {person.FirstName} {person.LastName.ToUpper()}");
+                                Console.WriteLine($"{nr}   {person.Id}  {person.PayedNumber}   {person.FullName}");
                                 nr++;
                             }
                         }
@@ -97,7 +97,7 @@ namespace ConferenceLibrary
                 {
                     if (person.HasPaid)
                     {
-                        Console.WriteLine($" {person.Id}  {person.PayedNumber}  \t{person.FirstName} {person.LastName.ToUpper()}");
+                        Console.WriteLine($" {person.Id}  {person.PayedNumber}  \t{person.FullName}");
                     }
                 }
             }
@@ -133,23 +133,18 @@ namespace ConferenceLibrary
         public void WriteToFile(string filePath)
         {
             List<string> output = new List<string>();
-            for (int i = 0; i < Talk.Count - 1 ; i++)
+            for (int i = 0; i < Talk.Count - 1; i++)
             {
                 output.Add($"{Talk[i].Subjects},{Talk[i].SeatsAvaillable},{Talk[i].dateTime}");
                 foreach (var person in People[i])
                 {
-                    output.Add($"{person.Id},{person.FirstName},{person.LastName}");
+                    output.Add($"{person.Id},{person.FullName}");
                 }
             }
-            //foreach (var talk in Talk)
-            //{
-            //    output.Add($"{talk.Subjects},{talk.SeatsAvaillable},{talk.dateTime}");               
-            //}
-            Console.WriteLine("Writing data to file...");
             try
             {
                 File.WriteAllLines(@filePath, output);
-                
+
                 Console.WriteLine("All entries written");
             }
             catch (Exception)

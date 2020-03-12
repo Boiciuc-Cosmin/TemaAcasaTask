@@ -5,25 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Conference"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="800">
+        Title="ConferenceProgram" Height="600" Width="900" >
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="20" />
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="20" />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
-            <RowDefinition Height="auto"/>            
-            <RowDefinition Height="auto"/>            
-            <RowDefinition Height="auto"/>            
-            <RowDefinition Height="auto"/>            
-            <RowDefinition Height="*"/>            
-            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
+        <DockPanel Background="DarkSlateGray" Grid.Row="0" Grid.Column="0" Grid.RowSpan="4">
+            <StackPanel VerticalAlignment="Center">
+                <Button BorderBrush="Black" BorderThickness="2" Content="Attendees" Margin="6" Background="SlateGray" Width="150" Height="50"/>
+                <Button BorderBrush="Black" BorderThickness="2" Content="Speakers" Margin="6" Background="SlateGray" Width="150" Height="50"/>
+                <Button BorderBrush="Black" BorderThickness="2" Content="Talks" Margin="6" Background="SlateGray" Width="150" Height="50"/>
+                <Button BorderBrush="Black" BorderThickness="2" Content="Workshops" Margin="6" Background="SlateGray" Width="150" Height="50"/>
+            </StackPanel>
+        </DockPanel>
         
         
+        <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="3" Grid.RowSpan="4" Content="{Binding}"/>
+
     </Grid>
 </Window>

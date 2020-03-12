@@ -23,7 +23,7 @@ namespace ConferenceLibrary
             Console.WriteLine("   ID \t\tName");
             foreach (var speaker in SpeakersList)
             {
-                Console.WriteLine($"   #{speaker.Id} \t{speaker.FirstName} {speaker.LastName.ToUpper()}");
+                Console.WriteLine($"   #{speaker.Id} \t{speaker.FullName}");
             }
         }
 
@@ -55,7 +55,7 @@ namespace ConferenceLibrary
             List<string> output = new List<string>();
             foreach (var person in SpeakersList)
             {
-                output.Add($"{person.Id},{person.FirstName},{person.LastName}");
+                output.Add($"{person.Id},{person.FullName}");
             }
             Console.WriteLine("Writing data to file...");
             try

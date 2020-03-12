@@ -29,7 +29,7 @@ namespace ConferenceLibrary
             Console.WriteLine($"   ID    PayID \tName");
             foreach (var person in People)
             {
-                Console.WriteLine($"   #{person.Id}  {person.PayedNumber}  \t{person.FirstName} {person.LastName.ToUpper()} {person.HasPaid}");
+                Console.WriteLine($"   #{person.Id}  {person.PayedNumber}  \t{person.FullName} {person.HasPaid}");
             }
         }
 
@@ -41,7 +41,7 @@ namespace ConferenceLibrary
 
             foreach (var personBy in personById)
             {
-                Console.WriteLine($"   {personBy.Id}  {personBy.PayedNumber}  \t{personBy.FirstName} {personBy.LastName.ToUpper()}");
+                Console.WriteLine($"   {personBy.Id}  {personBy.PayedNumber}  \t{personBy.FullName}");
             }
         }
 
@@ -82,7 +82,7 @@ namespace ConferenceLibrary
             List<string> output = new List<string>();
             foreach (var person in People)
             {
-                output.Add($"{person.Id},{person.FirstName},{person.LastName},{person.HasPaid},{person.PayedNumber}");
+                output.Add($"{person.Id},{person.FullName},{person.HasPaid},{person.PayedNumber}");
             }
             Console.WriteLine("Writing data to file...");
             try
