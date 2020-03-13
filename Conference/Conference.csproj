@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>WindowIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -55,6 +58,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\AttendeesViewModel.cs" />
+    <Compile Include="ViewModels\SpeakersViewModel.cs" />
+    <Compile Include="ViewModels\TalksViewModel.cs" />
+    <Compile Include="ViewModels\WorkshopViewModel.cs" />
+    <Compile Include="Views\Attendees.xaml.cs">
+      <DependentUpon>Attendees.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Speakers.xaml.cs">
+      <DependentUpon>Speakers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Talks.xaml.cs">
+      <DependentUpon>Talks.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workshop.xaml.cs">
+      <DependentUpon>Workshop.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +86,22 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\Attendees.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Speakers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Talks.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workshop.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -99,6 +134,15 @@
       <Project>{1a43d430-78a4-47b1-a898-e9c498fe117c}</Project>
       <Name>ConferenceLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WindowIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="WindowIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\ConferenceIcon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

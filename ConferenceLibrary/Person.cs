@@ -8,7 +8,7 @@ namespace ConferenceLibrary
         public string LastName { get; set; }
         public string Id { get; set; }
         public bool HasPaid { get; set; }
-        public int PayedNumber;
+        public int PayedNumber { get; set; }
 
         public string FullName
         {

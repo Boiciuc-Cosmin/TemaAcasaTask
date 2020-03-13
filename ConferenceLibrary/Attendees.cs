@@ -47,6 +47,7 @@ namespace ConferenceLibrary
 
         public void ReadFromFile(string filePath)
         {
+            
             try
             {
                 List<string> lines = File.ReadAllLines(@filePath).ToList();
